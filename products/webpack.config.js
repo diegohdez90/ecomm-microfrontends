@@ -44,6 +44,9 @@ module.exports = {
 			use: ['@svgr/webpack'],
 		},]
 	},
+	devServer: {
+		port: 8083
+	},
 	plugins: [
 		new HtmlWebpackPlugin({
 			template: './public/index.html',
