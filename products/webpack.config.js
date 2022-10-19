@@ -49,14 +49,13 @@ module.exports = {
 	},
 	plugins: [
 		new HtmlWebpackPlugin({
-			template: './public/index.html',
-			filename: 'index.html'
+			template: './public/index.html'
 		}),
 		new ModuleFederationPlugin({
 			name: 'products',
 			filename: 'remoteEntry.js',
 			exposes: {
-				'./ProductsIndex': './src/index'
+				'./ProductsIndex': './src/'
 			}
 		})
 	]
