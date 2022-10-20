@@ -2,5 +2,5 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 
-const root = ReactDOM.createRoot(document.querySelector('#root') as Element);
+const root = ReactDOM.createRoot(document.querySelector('#products') as Element);
 root.render(<App />);
