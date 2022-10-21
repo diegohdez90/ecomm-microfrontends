@@ -1,5 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { ModuleFederationPlugin } = require('webpack').container;
+const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
+const { dependencies } = require("./package.json");
 
 module.exports = {
 	entry: "./src/index.tsx",
@@ -45,6 +47,7 @@ module.exports = {
 		},]
 	},
 	plugins: [
+		new ForkTsCheckerWebpackPlugin(),
 		new HtmlWebpackPlugin({
 			template: './public/index.html'
 		}),
@@ -53,6 +56,20 @@ module.exports = {
 			remotes: {
 				'products': 'products@http://localhost:8083/remoteEntry.js',
 				'cart': 'cart@http://localhost:8084/remoteEntry.js'
+			},
+			shared: {
+				...dependencies,
+				react: { singleton: true, eager: true, requiredVersion: dependencies.react },
+				"react-dom": {
+					singleton: true,
+					eager: true,
+					requiredVersion: dependencies["react-dom"],
+				},
+				"react-router-dom": {
+					singleton: true,
+					eager: true,
+					requiredVersion: dependencies["react-router-dom"],
+				},
 			}
 		})
 	]

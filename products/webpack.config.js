@@ -1,8 +1,9 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { ModuleFederationPlugin } = require('webpack').container;
+const { dependencies } = require("./package.json");
 
 module.exports = {
-	entry: "./src/index.tsx",
+	entry: "./src/index.ts",
 	devtool: "eval-source-map",
 	resolve: {
 		extensions: ['.js', '.ts', '.tsx']
@@ -55,7 +56,21 @@ module.exports = {
 			name: 'products',
 			filename: 'remoteEntry.js',
 			exposes: {
-				'./ProductsIndex': './src/'
+				'./ProductsIndex': './src/App'
+			},
+			shared: {
+				...dependencies,
+				react: { singleton: true, eager: true, requiredVersion: dependencies.react },
+				"react-dom": {
+					singleton: true,
+					eager: true,
+					requiredVersion: dependencies["react-dom"],
+				},
+				"react-router-dom": {
+					singleton: true,
+					eager: true,
+					requiredVersion: dependencies["react-router-dom"],
+				},
 			}
 		})
 	]
